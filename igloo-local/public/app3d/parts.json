@@ -1,0 +1,27 @@
+{
+  "archiveSource": "../../../hasil-inspekc/app3D-original-before-split.js",
+  "generatedOutputs": [
+    "../App3D-f554a111.js",
+    "../index-2eb69c09.js"
+  ],
+  "parts": [
+    { "file": "00-three-vendor-01.js", "startLine": 1, "endLine": 4933, "label": "Three.js and vendor runtime" },
+    { "file": "01-three-vendor-02.js", "startLine": 4934, "endLine": 9046, "label": "Three.js and vendor runtime" },
+    { "file": "02-three-vendor-03.js", "startLine": 9047, "endLine": 14992, "label": "Three.js and vendor runtime" },
+    { "file": "03-three-vendor-04.js", "startLine": 14993, "endLine": 19901, "label": "Three.js and vendor runtime" },
+    { "file": "04-three-vendor-05.js", "startLine": 19902, "endLine": 23608, "label": "Three.js and vendor runtime" },
+    { "file": "05-three-vendor-06.js", "startLine": 23609, "endLine": 29992, "label": "Three.js and vendor runtime" },
+    { "file": "06-three-vendor-07.js", "startLine": 29993, "endLine": 31228, "label": "Three.js, postprocessing, and GSAP" },
+    { "file": "07-shared-runtime.js", "startLine": 31229, "endLine": 32884, "label": "Shared event bus, environment, math, and scene base" },
+    { "file": "08-loaders-workers.js", "startLine": 32885, "endLine": 37090, "label": "Asset loaders and worker integration" },
+    { "file": "09-input-compositor.js", "startLine": 37091, "endLine": 39766, "label": "Input, audio, compositor, and renderer infrastructure" },
+    { "file": "10-config-shaders.js", "startLine": 39767, "endLine": 40446, "label": "Configuration and shader materials" },
+    { "file": "11-home-scene.js", "startLine": 40447, "endLine": 43848, "label": "Home scene" },
+    { "file": "12-cubes-scene.js", "startLine": 43849, "endLine": 48481, "label": "Cubes scene" },
+    { "file": "13-entry-scene.js", "startLine": 48482, "endLine": 52026, "label": "Entry scene" },
+    { "file": "14-ui-scene.js", "startLine": 52027, "endLine": 53816, "label": "UI scene" },
+    { "file": "15-detail-scene.js", "startLine": 53817, "endLine": 54723, "label": "Project detail scene" },
+    { "file": "16-controller.js", "startLine": 54724, "endLine": 55053, "label": "Main scene controller" },
+    { "file": "17-router-facade.js", "startLine": 55054, "endLine": 55301, "label": "Router and Svelte App3D facade" }
+  ]
+}
