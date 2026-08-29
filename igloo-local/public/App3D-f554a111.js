@@ -39852,27 +39852,45 @@ const Be = {
         interior: {
             enabled: !0,
             title: "////// Skill & Proyek",
-            content: `SKILLS
-
-Stack utama:
-■ Three.js + React Three Fiber  (3D scene & WebGL)
-■ Next.js + Tailwind             (web app production)
-■ GSAP + Framer Motion           (UI animation)
-■ Lenis                          (smooth scroll)
-■ Howler.js                      (audio interaktif)
-
-Skill teknis:
-▰▰▰▰▰▰▰▰▰▱  Custom GLSL shader (cuaca, kabut, kelambu)
-▰▰▰▰▰▰▰▰▱▱  WebGL pipeline optimization
-▰▰▰▰▰▰▰▱▱▱  Scroll-driven camera (spline CatmullRom)
-▰▰▰▰▰▱▱▱▱▱  Procedural geometry & particle
-
-AI Workflow:
-▸ Claude Code       — arsitek + perencana
-▸ OpenCode + OpenRouter — eksekusi + multi-model
-▸ Obsidian          — vault & dokumentasi
-
-PROJECTS
+            skills: [{
+                name: "Three.js + React Three Fiber",
+                icon: "threejs"
+            }, {
+                name: "Next.js + Tailwind",
+                icon: "nextdotjs"
+            }, {
+                name: "GSAP + Framer Motion",
+                icon: "gsap"
+            }, {
+                name: "Lenis",
+                icon: null
+            }, {
+                name: "Howler.js",
+                icon: null
+            }, {
+                name: "Claude Code",
+                icon: "claude"
+            }, {
+                name: "OpenCode + OpenRouter",
+                icon: null
+            }, {
+                name: "Obsidian",
+                icon: "obsidian"
+            }],
+            technicalSkills: [{
+                name: "▰▰▰▰▰▰▰▰▰▱  Custom GLSL shader (cuaca, kabut, kelambu)",
+                icon: "threejs"
+            }, {
+                name: "▰▰▰▰▰▰▰▰▱▱  WebGL pipeline optimization",
+                icon: "threejs"
+            }, {
+                name: "▰▰▰▰▰▰▰▱▱▱  Scroll-driven camera (spline CatmullRom)",
+                icon: "gsap"
+            }, {
+                name: "▰▰▰▰▰▱▱▱▱▱  Procedural geometry & particle",
+                icon: "threejs"
+            }],
+            content: `PROJECTS
 
 ▸ undangan.zegika.com    — undangan pernikahan digital Jepang
 ▸ lkps.zegika.com        — sistem informasi akademik
@@ -39888,30 +39906,82 @@ Kode & eksperimen lain ada di github.com/axolotl-void.`,
             objScale: 1.2
         }
     }, {
-        title: "PORTFOLIO_CO_03 Abstract",
-        hash: "abstract",
-        date: "06/28/2024",
+        title: "PORTFOLIO_YOGI_03 Visi & Filosofi",
+        hash: "visi-filosofi",
+        date: "30/08/2026",
         temp: -5,
         obj: "cube2",
         innerobject: "abstractlogo",
         interior: {
             enabled: !0,
-            title: "////// Summary",
-            content: `Introducing Abstract, the blockchain for consumer crypto, pioneering culture, community, and creativity onchain. We believe that consumer crypto is the breakthrough opportunity to bring billions of people onchain and the final frontier for consumer crypto adoption. The dominant consumer crypto chain will be the single greatest distribution channel-bringing users, liquidity, partnerships, and community to crypto-native builders and global brands.
+            title: "////// Visi & Filosofi",
+            content: `KENAPA 3D WEB?
 
-            Through a combination of culture & community building, a brand-new economic mechanism, cutting-edge cryptography, and dedicated builder & brand support, Abstract allows those building for the masses to scale and flourish.`,
-            socialTitle: "/// Discover",
+Saya percaya web yang cuma dibaca itu udah
+lewat masanya. Web seharusnya bisa dirasain
+— disentuh, dieksplorasi, dialami.
+
+3D bukan hiasan. 3D adalah bahasa baru
+untuk menyampaikan sesuatu yang kata-kata
+dan gambar datar gak bisa capai.
+
+Dari undangan nikah sampai portfolio ini —
+setiap proyek saya adalah eksperimen:
+bisakah web bikin orang bilang "wow"?
+
+
+KENAPA AI-ASSISTED?
+
+Saya bukan developer yang malu pakai AI.
+Saya yang merangkul AI sebagai rekan kerja.
+
+▸ Claude Code berpikir strategis
+  — arsitektur, rencana, keputusan besar
+▸ OpenCode + OpenRouter mengeksekusi
+  — multi-model, cepat, parallel
+▸ Obsidian menyimpan semuanya
+  — rancangan, catatan, vault hidup
+
+Hasilnya: satu orang bisa mengerjakan
+apa yang biasanya butuh tim.
+
+AI bukan pengganti skill.
+AI adalah pengali dari skill yang sudah ada.
+
+
+ARAH KE DEPAN
+
+Target saya bukan jadi "developer biasa
+yang bisa 3D." Tapi jadi orang yang ada
+di persimpangan AI dan 3D web — tempat
+yang belum banyak orang berdiri.
+
+▸ Immersive web experiences
+  yang accessible, bukan cuma demo tech
+▸ AI-native workflow
+  yang terbuka dan bisa direplikasi
+▸ Proyek nyata yang berdampak
+  bukan cuma eksperimen di sandbox
+
+Kalau kamu sampai di kristal ini,
+kamu udah lihat cara saya berpikir.
+
+Mari bikin sesuatu bareng.`,
+            socialTitle: "/// Connect",
             social: [{
-                name: "X",
-                link: "https://x.com/abstractchain"
+                name: "WA",
+                link: "https://wa.me/6281260312799"
             }, {
-                name: "LI",
-                link: "https://www.linkedin.com/company/abstract-foundation/about/"
+                name: "G",
+                link: "mailto:yogiprasetya907@gmail.com"
             }],
             linkTitle: "/// Visit",
             links: [{
-                name: "website",
-                link: "https://cubelabs.xyz"
+                name: "github",
+                link: "https://github.com/axolotl-void"
+            }, {
+                name: "zegika",
+                link: "https://www.zegika.com"
             }],
             obj: "abstractlogo",
             objScale: 1.2
@@ -53556,7 +53626,31 @@ class zF {
                 ...t,
                 color: Be.colorProjectTitle
             }
-        }), new Yh({
+        })),
+        e.skills && this.elements.push(new SK({
+            parent: this,
+            skills: e.skills,
+            options: {
+                ...t,
+                color: Be.colorProjectText
+            }
+        })),
+        e.technicalSkills && this.elements.push(new Yh({
+            parent: this,
+            text: "Skill teknis:",
+            options: {
+                ...t,
+                color: Be.colorProjectTitle
+            }
+        }), new SK({
+            parent: this,
+            skills: e.technicalSkills,
+            options: {
+                ...t,
+                color: Be.colorProjectText
+            }
+        })),
+        this.elements.push(new Yh({
             parent: this,
             text: e.content,
             options: {
@@ -53663,7 +53757,7 @@ class zF {
         this.elements.forEach(t => {
             t.els ? t.els.forEach(s => {
                 s.mesh.material.uniforms.tSim.value = e.finalRT.texture,
-                s.icon.material.uniforms.tSim.value = e.finalRT.texture
+                s.icon && (s.icon.material.uniforms.tSim.value = e.finalRT.texture)
             }) : t.mesh.material.uniforms.tSim.value = e.finalRT.texture
         })
     }
@@ -53821,6 +53915,220 @@ class GF extends Jo {
             e.resize()
         })
     }
+}
+class yK {
+    constructor(e={}, t=null, s=0)
+    {
+        this.data = e,
+        this.parent = t,
+        this.index = s,
+        this.icon = null,
+        this.ready = new Promise(n => {
+            this.isReady = n
+        }),
+        this.init()
+    }
+    async init()
+    {
+        this.text = new Yh({
+            parent: this.parent.parent,
+            text: this.data.name,
+            options: this.parent.options
+        }),
+        await this.text.ready,
+        this.mesh = this.text.mesh,
+        this.mesh.name = "skill";
+        if (this.data.icon) {
+            const e = new kt;
+            e.translate(.5, -.5, 0),
+            this.icon = new Ce(e, new fe({
+                uniformsGroups: [he.UBO],
+                uniforms: {
+                    tMap: {
+                        value: le.load(`ui/skills/${this.data.icon}.png`, "srgb")
+                    },
+                    uColor: {
+                        value: new Z(this.parent.options.color)
+                    },
+                    uShow: {
+                        value: 0
+                    },
+                    uRand: {
+                        value: Math.random()
+                    },
+                    uOpacity: {
+                        value: 1
+                    },
+                    uFadeMargin: {
+                        value: this.parent.parent.scrollMargin
+                    },
+                    uHighlights: {
+                        value: !0
+                    },
+                    tSim: {
+                        value: null
+                    }
+                },
+                vertexShader: `
+                            ${Nt}
+                            ${Ue}
+                            ${ae}
+                            ${Ht}
+
+                            uniform sampler2D tSim;
+                            uniform bool uHighlights;
+
+                            varying vec2 vUv;
+                            varying float wPosY;
+                            flat varying vec2 vScale;
+                            flat varying vec2 illum;
+
+                            void main() {
+                                illum = vec2(0.0);
+
+                                if (uHighlights) {
+                                    vec4 ppos = modelMatrix * vec4(vec3(0.0), 1.0);
+                                    vec2 uvScreen = abs(ppos.xy) / resolutionUI;
+                                    vec2 val = texture2D(tSim, vec2(uvScreen.x, 1.0 - uvScreen.y)).xy;
+                                    illum.x = fit(val.g, 0.01, 1.0, 0.0, 5.0);
+                                    illum.y = val.r;
+                                }
+
+                                vUv = uv;
+                                vScale = getMatrixScale(modelMatrix).xy;
+
+                                vec4 wPos = modelMatrix * vec4(position, 1.0);
+                                wPosY = wPos.y;
+                                gl_Position = projectionMatrix * viewMatrix * wPos;
+                            }
+                        `,
+                fragmentShader: `
+                            ${ae}
+                            ${ii}
+                            ${Lc}
+                            ${Ht}
+
+                            uniform sampler2D tMap;
+                            uniform vec3 uColor;
+                            uniform float uShow;
+                            uniform float uRand;
+                            uniform float uOpacity;
+                            uniform float uFadeMargin;
+
+                            varying vec2 vUv;
+                            varying float wPosY;
+                            flat varying vec2 vScale;
+                            flat varying vec2 illum;
+
+                            void main() {
+                                vec2 uv = imagefitUV(vUv, vec2(textureSize(tMap, 0)), vScale, 1.0);
+                                float a = 1.0;
+
+                                if (uShow < 1.0) {
+                                    a *= sin(uShow * 30.0 + uRand * 12.4242) * 0.4 + 0.6;
+                                    a *= step(0.01, uShow);
+                                }
+
+                                a *= texture2D(tMap, uv).a;
+                                a *= uOpacity * (1.0 - floor(mod(illum.x * 5.34234, 2.0)));
+
+                                // mobile fade
+                                a *= smoothstep(-uFadeMargin, -uFadeMargin * 3.0, wPosY);
+                                a *= smoothstep(-resolutionUI.y + uFadeMargin, -resolutionUI.y + uFadeMargin * 3.0, wPosY);
+
+                                gl_FragColor = vec4(mix(uColor, vec3(0.8), fit(illum.y, 0.6, 0.8, 0.0, 1.0)), a);
+                            }
+                        `,
+                depthWrite: !1,
+                depthTest: !1,
+                transparent: !0
+            })),
+            this.icon.name = "skill-icon",
+            this.mesh.add(this.icon)
+        }
+        this.isReady()
+    }
+    show(e=1, t=0)
+    {
+        this.icon && (this.icon.material.uniforms.uRand.value = Math.random(), re.fromTo(this.icon.material.uniforms.uOpacity, {
+            value: 0
+        }, {
+            value: 1,
+            delay: t,
+            duration: 0,
+            overwrite: !0
+        }), re.fromTo(this.icon.material.uniforms.uShow, {
+            value: 0
+        }, {
+            delay: t,
+            value: 1,
+            duration: .5 * e,
+            ease: "none",
+            overwrite: !0
+        })),
+        this.text.show(e, t)
+    }
+    hide()
+    {
+        return this.icon && re.to(this.icon.material.uniforms.uOpacity, {
+            value: 0,
+            duration: .15,
+            ease: "power2.out",
+            overwrite: !0
+        }), this.text.hide()
+    }
+    resize(e={})
+    {
+        return this.text.resize(e)
+    }
+}
+class SK {
+    constructor({parent: e=null, skills: t=[], options: s={}}={})
+    {
+        this.parent = e,
+        this.skills = t,
+        this.options = s,
+        this.ready = new Promise(n => {
+            this.isReady = n
+        }),
+        this.els = [],
+        this.mesh = new Gi,
+        this.mesh.name = "skills",
+        this.mesh.size = new H,
+        this.init()
+    }
+    async init()
+    {
+        this.els = this.skills.map((e, t) => new yK(e, this, t)),
+        await Promise.all(this.els.map(e => e.ready)),
+        this.mesh.add(...this.els.map(e => e.mesh)),
+        await this.resize(),
+        this.isReady()
+    }
+    hide()
+    {
+        return Promise.all(this.els.map(e => e.hide()))
+    }
+    show(e=1, t=0)
+    {
+        return Promise.all(this.els.map(s => s.show(e, t)))
+    }
+    resize(e={})
+    {
+        return Promise.all(this.els.map(t => t.resize(e))).then(() => {
+            let y = 0,
+                x = 0;
+            const a = this.parent.scene.small ? 12 : 18;
+            this.mesh.size.set(0, 0),
+            this.els.forEach(n => {
+                const r = n.mesh.size.y;
+                n.icon ? (n.icon.scale.set(a, a, 1), n.icon.position.set(-a - 8, 0, 0), n.mesh.position.set(a + 8, -y, 0), x = Math.max(x, a + 8 + n.mesh.size.x)) : (n.mesh.position.set(0, -y, 0), x = Math.max(x, n.mesh.size.x)),
+                y += r + 10
+            }),
+            this.mesh.size.set(x, Math.max(0, y - 10))
+        })
+    }
+    update() {}
 }
 class HF {
     constructor(e)

@@ -86,27 +86,45 @@ const Be = {
         interior: {
             enabled: !0,
             title: "////// Skill & Proyek",
-            content: `SKILLS
-
-Stack utama:
-■ Three.js + React Three Fiber  (3D scene & WebGL)
-■ Next.js + Tailwind             (web app production)
-■ GSAP + Framer Motion           (UI animation)
-■ Lenis                          (smooth scroll)
-■ Howler.js                      (audio interaktif)
-
-Skill teknis:
-▰▰▰▰▰▰▰▰▰▱  Custom GLSL shader (cuaca, kabut, kelambu)
-▰▰▰▰▰▰▰▰▱▱  WebGL pipeline optimization
-▰▰▰▰▰▰▰▱▱▱  Scroll-driven camera (spline CatmullRom)
-▰▰▰▰▰▱▱▱▱▱  Procedural geometry & particle
-
-AI Workflow:
-▸ Claude Code       — arsitek + perencana
-▸ OpenCode + OpenRouter — eksekusi + multi-model
-▸ Obsidian          — vault & dokumentasi
-
-PROJECTS
+            skills: [{
+                name: "Three.js + React Three Fiber",
+                icon: "threejs"
+            }, {
+                name: "Next.js + Tailwind",
+                icon: "nextdotjs"
+            }, {
+                name: "GSAP + Framer Motion",
+                icon: "gsap"
+            }, {
+                name: "Lenis",
+                icon: null
+            }, {
+                name: "Howler.js",
+                icon: null
+            }, {
+                name: "Claude Code",
+                icon: "claude"
+            }, {
+                name: "OpenCode + OpenRouter",
+                icon: null
+            }, {
+                name: "Obsidian",
+                icon: "obsidian"
+            }],
+            technicalSkills: [{
+                name: "▰▰▰▰▰▰▰▰▰▱  Custom GLSL shader (cuaca, kabut, kelambu)",
+                icon: "threejs"
+            }, {
+                name: "▰▰▰▰▰▰▰▰▱▱  WebGL pipeline optimization",
+                icon: "threejs"
+            }, {
+                name: "▰▰▰▰▰▰▰▱▱▱  Scroll-driven camera (spline CatmullRom)",
+                icon: "gsap"
+            }, {
+                name: "▰▰▰▰▰▱▱▱▱▱  Procedural geometry & particle",
+                icon: "threejs"
+            }],
+            content: `PROJECTS
 
 ▸ undangan.zegika.com    — undangan pernikahan digital Jepang
 ▸ lkps.zegika.com        — sistem informasi akademik
@@ -122,30 +140,82 @@ Kode & eksperimen lain ada di github.com/axolotl-void.`,
             objScale: 1.2
         }
     }, {
-        title: "PORTFOLIO_CO_03 Abstract",
-        hash: "abstract",
-        date: "06/28/2024",
+        title: "PORTFOLIO_YOGI_03 Visi & Filosofi",
+        hash: "visi-filosofi",
+        date: "30/08/2026",
         temp: -5,
         obj: "cube2",
         innerobject: "abstractlogo",
         interior: {
             enabled: !0,
-            title: "////// Summary",
-            content: `Introducing Abstract, the blockchain for consumer crypto, pioneering culture, community, and creativity onchain. We believe that consumer crypto is the breakthrough opportunity to bring billions of people onchain and the final frontier for consumer crypto adoption. The dominant consumer crypto chain will be the single greatest distribution channel-bringing users, liquidity, partnerships, and community to crypto-native builders and global brands.
+            title: "////// Visi & Filosofi",
+            content: `KENAPA 3D WEB?
 
-            Through a combination of culture & community building, a brand-new economic mechanism, cutting-edge cryptography, and dedicated builder & brand support, Abstract allows those building for the masses to scale and flourish.`,
-            socialTitle: "/// Discover",
+Saya percaya web yang cuma dibaca itu udah
+lewat masanya. Web seharusnya bisa dirasain
+— disentuh, dieksplorasi, dialami.
+
+3D bukan hiasan. 3D adalah bahasa baru
+untuk menyampaikan sesuatu yang kata-kata
+dan gambar datar gak bisa capai.
+
+Dari undangan nikah sampai portfolio ini —
+setiap proyek saya adalah eksperimen:
+bisakah web bikin orang bilang "wow"?
+
+
+KENAPA AI-ASSISTED?
+
+Saya bukan developer yang malu pakai AI.
+Saya yang merangkul AI sebagai rekan kerja.
+
+▸ Claude Code berpikir strategis
+  — arsitektur, rencana, keputusan besar
+▸ OpenCode + OpenRouter mengeksekusi
+  — multi-model, cepat, parallel
+▸ Obsidian menyimpan semuanya
+  — rancangan, catatan, vault hidup
+
+Hasilnya: satu orang bisa mengerjakan
+apa yang biasanya butuh tim.
+
+AI bukan pengganti skill.
+AI adalah pengali dari skill yang sudah ada.
+
+
+ARAH KE DEPAN
+
+Target saya bukan jadi "developer biasa
+yang bisa 3D." Tapi jadi orang yang ada
+di persimpangan AI dan 3D web — tempat
+yang belum banyak orang berdiri.
+
+▸ Immersive web experiences
+  yang accessible, bukan cuma demo tech
+▸ AI-native workflow
+  yang terbuka dan bisa direplikasi
+▸ Proyek nyata yang berdampak
+  bukan cuma eksperimen di sandbox
+
+Kalau kamu sampai di kristal ini,
+kamu udah lihat cara saya berpikir.
+
+Mari bikin sesuatu bareng.`,
+            socialTitle: "/// Connect",
             social: [{
-                name: "X",
-                link: "https://x.com/abstractchain"
+                name: "WA",
+                link: "https://wa.me/6281260312799"
             }, {
-                name: "LI",
-                link: "https://www.linkedin.com/company/abstract-foundation/about/"
+                name: "G",
+                link: "mailto:yogiprasetya907@gmail.com"
             }],
             linkTitle: "/// Visit",
             links: [{
-                name: "website",
-                link: "https://cubelabs.xyz"
+                name: "github",
+                link: "https://github.com/axolotl-void"
+            }, {
+                name: "zegika",
+                link: "https://www.zegika.com"
             }],
             obj: "abstractlogo",
             objScale: 1.2
