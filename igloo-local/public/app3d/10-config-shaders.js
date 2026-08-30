@@ -236,6 +236,11 @@ Mari bikin sesuatu bareng.`,
         url: "https://medium.com/@iglooinc",
         vdb: "medium_32",
         scale: 1.25
+    }, {
+        title: "Gmail 3D",
+        url: "mailto:yogiprasetya907@gmail.com",
+        vdb: "gmail-logo_64.bin",
+        scale: 1.3
     }],
     volume: 1,
     muted: !0
