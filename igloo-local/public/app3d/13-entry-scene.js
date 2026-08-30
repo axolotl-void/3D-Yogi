@@ -1557,33 +1557,28 @@ class wF {
     }
     async init()
     {
-        const loadVol = async (vdbName) => {
-            if (vdbName.endsWith('.bin')) {
-                try {
-                    const res = await fetch(`/assets/volumes/${vdbName}`);
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                    const buf = await res.arrayBuffer();
-                    const data = new Float32Array(buf);
-                    console.log(`[BIN Loader] Successfully loaded ${vdbName}, size: ${data.length} floats`);
-                    const tex = new DA(data, 64, 64, 64);
-                    tex.format = wt;
-                    tex.type = Lt;
-                    tex.minFilter = _t;
-                    tex.magFilter = _t;
-                    tex.unpackAlignment = 1;
-                    tex.needsUpdate = true;
-                    return tex;
-                } catch (err) {
-                    console.error("[BIN Loader Error]", err);
-                    return le.load(`volumes/peachesbody_64.ktx2`, "3d-data");
-                }
+        const loadVdb = async (vdbName) => {
+            if (vdbName.endsWith('.raw')) {
+                const res = await fetch(`./assets/volumes/${vdbName}`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const buf = await res.arrayBuffer();
+                const data = new Uint8Array(buf);
+                const tex = new DA(data, 64, 64, 64);
+                tex.format = wt;      // RGBAFormat
+                tex.type = 1009;      // UnsignedByteType
+                tex.minFilter = _t;   // LinearFilter
+                tex.magFilter = _t;   // LinearFilter
+                tex.unpackAlignment = 1;
+                tex.needsUpdate = true;
+                return tex;
             }
             return le.load(`volumes/${vdbName}.ktx2`, "3d-data");
         };
-        const e = await loadVol(Be.links[0].vdb);
+
+        const e = await loadVdb(Be.links[0].vdb);
         this.vdbs.push(e);
         for (let l = 1; l < Be.links.length; l++)
-            this.vdbs.push(await loadVol(Be.links[l].vdb));
+            this.vdbs.push(await loadVdb(Be.links[l].vdb));
         const t = ie.getTextureSizeParticles(this.particles),
             s = new Float32Array(t * t * 4);
         for (let l = 0; l < this.particles; l++)

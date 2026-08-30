@@ -222,24 +222,28 @@ Mari bikin sesuatu bareng.`,
         }
     }],
     links: [{
+        name: "linkedin",
         title: "LinkedIn",
         url: "https://www.linkedin.com/company/igloo-incorporated",
         vdb: "peachesbody_64",
         scale: 1.2
     }, {
+        name: "twitter",
         title: "X / Twitter",
         url: "https://www.twitter.com/iglooinc",
         vdb: "x_64",
         scale: 1.3
     }, {
+        name: "medium",
         title: "Medium",
         url: "https://medium.com/@iglooinc",
         vdb: "medium_32",
         scale: 1.25
     }, {
+        name: "github",
         title: "Axolotl 3D",
         url: "https://github.com/axolotl-void",
-        vdb: "axolotl_64",
+        vdb: "axolotl_64.raw",
         scale: 1.3
     }],
     volume: 1,

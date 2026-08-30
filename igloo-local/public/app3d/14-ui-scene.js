@@ -1405,7 +1405,7 @@ class ey {
     {
         this.els = this.links.map((e, t) => new kF(e, this, t)),
         await Promise.all(this.els.map(e => e.ready)),
-        this.mesh.add(...this.els.map(e => e.mesh)),
+        this.mesh.add(...this.els.map(e => e.mesh).filter(e => e && e.isObject3D)),
         this.resize(),
         this.interaction = new Er({
             meshes: this.els.map(e => e.interactionMesh),
