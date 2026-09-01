@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/assets/:path*",
+      "destination": "https://www.igloo.inc/assets/:path*"
+    }
+  ]
+}
