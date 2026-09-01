@@ -7,7 +7,7 @@
     "assemble": "node scripts/assemble-app3d.mjs",
     "dev": "vite",
     "predev": "npm run assemble",
-    "build": "vite build",
+    "build": "node scripts/assemble-app3d.mjs && vite build",
     "prebuild": "npm run assemble",
     "verify:app3d": "node scripts/assemble-app3d.mjs --verify",
     "preview": "vite preview"

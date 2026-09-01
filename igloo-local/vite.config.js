@@ -49,6 +49,7 @@ export default defineConfig({
   server: {
     port: 3000,
     host: '0.0.0.0',
+    /* Disabled remote proxy fallback to keep server 100% local
     proxy: {
       '/assets': {
         target: 'https://www.igloo.inc',
@@ -56,10 +57,12 @@ export default defineConfig({
         secure: true,
       },
     },
+    */
   },
   preview: {
     port: 3000,
     host: '0.0.0.0',
+    /* Disabled remote proxy fallback to keep server 100% local
     proxy: {
       '/assets': {
         target: 'https://www.igloo.inc',
@@ -67,6 +70,7 @@ export default defineConfig({
         secure: true,
       },
     },
+    */
   },
   build: {
     target: 'esnext',
