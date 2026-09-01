@@ -27,10 +27,10 @@ const Be = {
     close: "Close",
     social: [{
         name: "X",
-        link: "https://twitter.com/iglooinc"
+        link: "https://github.com/axolotl-void"
     }, {
         name: "LI",
-        link: "https://www.linkedin.com/company/igloo-incorporated"
+        link: "https://github.com/axolotl-void"
     }],
     cubes: [{
         title: "PORTFOLIO_YOGI Tentang Saya",
@@ -224,19 +224,19 @@ Mari bikin sesuatu bareng.`,
     links: [{
         name: "linkedin",
         title: "LinkedIn",
-        url: "https://www.linkedin.com/company/igloo-incorporated",
+        url: "https://github.com/axolotl-void",
         vdb: "peachesbody_64",
         scale: 1.2
     }, {
         name: "twitter",
         title: "X / Twitter",
-        url: "https://www.twitter.com/iglooinc",
+        url: "https://github.com/axolotl-void",
         vdb: "x_64",
         scale: 1.3
     }, {
         name: "medium",
         title: "Medium",
-        url: "https://medium.com/@iglooinc",
+        url: "https://github.com/axolotl-void",
         vdb: "medium_32",
         scale: 1.25
     }, {
