@@ -39682,7 +39682,6 @@ Jr = new WeakMap,
 Ol = new WeakMap,
 Fu = new WeakMap,
 kl = new WeakMap;
-console.log("🧊 by https://abeto.co");
 class vE {
     constructor()
     {
@@ -48087,7 +48086,8 @@ class nF extends Gi {
     }
     async init()
     {
-        const [e, t] = await Promise.all([zt.load(`cubes/${this.options.obj}.drc`), zt.load(`${this.options.innerobject}.drc`)]);
+        const e = await zt.load(`cubes/${this.options.obj}.drc`);
+        const t = this.options.innerobject ? await zt.load(`${this.options.innerobject}.drc`) : null;
         this.mesh = new bE(e, new WL(3)),
         this.mesh.name = `cube${this.options.index} `,
         this.mesh.renderOrder = 3,
@@ -48109,12 +48109,9 @@ class nF extends Gi {
             s.material.transmission = 0
         }),
         this.mouseFrost = new jL(this, {}),
-        this.mesh3 = new Ce(t, new or({
+        this.options.innerobject && (this.mesh3 = new Ce(t, new or({
             map: le.load(`cubes/${this.options.innerobject}_color.ktx2`)
-        })),
-        this.mesh3.name = `${this.options.innerobject + this.options.index} `,
-        this.mesh3.renderOrder = 10,
-        this.add(this.mesh3),
+        })), this.mesh3.name = `${this.options.innerobject + this.options.index} `, this.mesh3.renderOrder = 10, this.add(this.mesh3)),
         this.mesh.onBeforeRender = () => {
             this.mesh.material.side === es && (this.mouseFrost.update(), this.mesh.material.uniforms.tMouseFrost.value = this.mouseFrost.finalRT.texture)
         },
@@ -48482,7 +48479,7 @@ class aF extends Jo {
             r.mesh.material.needsUpdate = !0,
             r.mesh.material.uniforms.tTransmissionSamplerMap.value = this._bgTex,
             r.mesh.material.uniforms.uTransmissionSamplerSize.value.set(4, 4),
-            r.mesh3.visible = !0,
+            r.mesh3 && (r.mesh3.visible = !0),
             r.mesh2.visible = !1,
             r.plexus.group.visible = !1
         }),
@@ -48499,7 +48496,7 @@ class aF extends Jo {
             r.mesh.material.needsUpdate = !0,
             r.mesh.material.uniforms.tTransmissionSamplerMap.value = this._transmissionRT.texture,
             r.mesh.material.uniforms.uTransmissionSamplerSize.value.set(this._transmissionRT.width, this._transmissionRT.height),
-            r.mesh3.visible = !1,
+            r.mesh3 && (r.mesh3.visible = !1),
             r.mesh2.visible = !0,
             r.plexus.group.visible = !0
         }),

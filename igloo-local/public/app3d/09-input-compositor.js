@@ -2592,7 +2592,6 @@ Jr = new WeakMap,
 Ol = new WeakMap,
 Fu = new WeakMap,
 kl = new WeakMap;
-console.log("🧊 by https://abeto.co");
 class vE {
     constructor()
     {
