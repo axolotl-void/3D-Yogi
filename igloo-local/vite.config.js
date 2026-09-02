@@ -51,27 +51,32 @@ export default defineConfig({
     host: '0.0.0.0',
     proxy: {
       '/assets': {
-        target: "https://www.igloo.inc",
+        target: 'https://www.igloo.inc',
         changeOrigin: true,
-        secure: true,
-      },
-    },
+        secure: true
+      }
+    }
   },
   preview: {
     port: 3000,
     host: '0.0.0.0',
     proxy: {
       '/assets': {
-        target: "https://www.igloo.inc",
+        target: 'https://www.igloo.inc',
         changeOrigin: true,
-        secure: true,
-      },
-    },
+        secure: true
+      }
+    }
   },
   build: {
-    target: 'esnext',
+    target: 'es2019',
+    minify: false,
     rollupOptions: {
       input: 'index.html',
-    },
-  },
+      output: {
+        format: 'es',
+        entryFileNames: '[name].js'
+      }
+    }
+  }
 });

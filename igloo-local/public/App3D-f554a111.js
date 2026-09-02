@@ -3612,7 +3612,7 @@ class It extends hn {
                 this.add(arguments[t]);
             return this
         }
-        return e === this ? (console.error("THREE.Object3D.add: object can't be added as a child of itself.", e), this) : (e && e.isObject3D ? (e.removeFromParent(), e.parent = this, this.children.push(e), e.dispatchEvent(_v), Ia.child = e, this.dispatchEvent(Ia), Ia.child = null) : console.error("THREE.Object3D.add: object not an instance of THREE.Object3D.", e), this)
+        return e === this ? (console.error("THREE.Object3D.add: object can't be added as a child of itself.", e), this) : (e && e.isObject3D ? (e.removeFromParent(), e.parent = this, this.children.push(e), e.dispatchEvent(_v), Ia.child = e, this.dispatchEvent(Ia), Ia.child = null) : (console.error("THREE.Object3D.add: object not an instance of THREE.Object3D.", e, new Error("add-call-site").stack), this))
     }
     remove(e)
     {
@@ -39427,7 +39427,14 @@ class Ui extends Ce {
             this.isReady = s
         }),
         this.update().then(() => {
-            this.material = i3(e.font, t),
+            try {
+                this.material = i3(e.font, t)
+            } catch (err) {
+                console.error("MSDF_UI_MATERIAL_FAIL:", err && err.message ? err.message : err, err && err.stack)
+            }
+            this.isReady()
+        }).catch(err => {
+            console.error("MSDF_UI_UPDATE_REJECT:", err && err.message ? err.message : err, err && err.stack);
             this.isReady()
         })
     }
@@ -39453,7 +39460,7 @@ class Ui extends Ce {
             this._updateSize(),
             t.dispose()
         } catch (t) {
-            console.log("Error updating meshText geometry:", t)
+            console.error("MSDF_UI_UPDATE_FAIL:", t && t.message ? t.message : t, t && t.stack)
         }
     }
 }
@@ -40018,7 +40025,7 @@ Mari bikin sesuatu bareng.`,
         title: "Axolotl 3D",
         url: "https://github.com/axolotl-void",
         vdb: "axolotl_64.raw",
-        scale: 1.3
+        scale: 0.65
     }],
     volume: 1,
     muted: !0
@@ -48219,9 +48226,16 @@ class nF extends Gi {
             v = Math.sin(Fe.time * g + this.options.rand * 12.423) * x * Math.sign(this.options.rand - .5),
             y = Math.sin(Fe.time * g + this.options.rand * 42.987) * x * Math.sign(this.options.rand - .5),
             S = Math.sin(Fe.time * g + this.options.rand * 2.53) * x * Math.sign(this.options.rand - .5);
-        this.rotation.y = p * a + v,
-        this.rotation.x = A * a + y,
-        this.rotation.z = m * a + S,
+        const _rx = A * a + y,
+            _ry = p * a + v,
+            _rz = m * a + S;
+        if (!isFinite(_rx) || !isFinite(_ry) || !isFinite(_rz)) {
+            this._nanLogged || (this._nanLogged = !0, console.error("NAN_ROT_CUBE", this.options.index, { rx: _rx, ry: _ry, rz: _rz, pos: [this.position.x, this.position.y, this.position.z], quat: [this.quaternion.x, this.quaternion.y, this.quaternion.z, this.quaternion.w] }))
+        } else {
+            this.rotation.y = _ry,
+            this.rotation.x = _rx,
+            this.rotation.z = _rz
+        }
         this.mesh2.material.uniforms.uProgress.value = a,
         this.texts.update(s, n, r),
         this.plexus.update(s, n, r),
@@ -48479,7 +48493,14 @@ class aF extends Jo {
         bp.subVectors(this.camera.position, this.camera.target).normalize(),
         this._LEFT.crossVectors(this.camera.up, bp),
         this._UP.crossVectors(bp, this._LEFT),
-        this.cubes.forEach((r, a) => r.update(this.progress, this.camera.basePosition.y, a)),
+        this.cubes.forEach((r, a) => {
+            try {
+                r.update(this.progress, this.camera.basePosition.y, a)
+            } catch (err) {
+                this._cubeErrCount = (this._cubeErrCount || 0) + 1,
+                this._cubeErrCount < 4 && console.error("CUBE_UPDATE_FAIL", a, err && err.message ? err.message : err, err && err.stack)
+            }
+        }),
         this.bg.update(this.progress),
         this.blurrytext.update(this.progress),
         this.backgroundshapes.update(this.progress),
@@ -48497,8 +48518,13 @@ class aF extends Jo {
         this.backgroundshapes.mesh.visible = !1;
         const t = he.renderer.webgl.getRenderTarget();
         he.renderer.webgl.setRenderTarget(this._transmissionRT),
-        he.renderer.webgl.clear(!0, !0, !0),
-        he.renderer.webgl.render(this, this.camera),
+        he.renderer.webgl.clear(!0, !0, !0);
+        try {
+            he.renderer.webgl.render(this, this.camera)
+        } catch (err) {
+            this._renderErrCount = (this._renderErrCount || 0) + 1,
+            (this._renderErrCount < 4 || this._renderErrCount % 90 === 0) && console.error("AFFRAME_RENDER_FAIL", this._renderErrCount, err && err.message ? err.message : err)
+        }
         he.renderer.webgl.setRenderTarget(t),
         this.cubes.forEach(r => {
             r.mesh.material.side = es,
@@ -53260,8 +53286,10 @@ class kF {
     }
     async init()
     {
+        console.log("KF_INIT_V2", Date.now(), this.data.name),
         this.mesh = new Ui({
             text: `[${this.data.name}]`,
+            font: "IBMPlexMono-Medium",
             ...this.parent.options
         }, {
             uniformsGroups: [he.UBO],
@@ -53548,7 +53576,7 @@ class ey {
     {
         this.parent = e,
         this.links = t,
-        this.options = s,
+        this.options = {font: "IBMPlexMono-Medium", ...s},
         this.ready = new Promise(n => {
             this.isReady = n
         }),
@@ -53560,9 +53588,11 @@ class ey {
     }
     async init()
     {
+        console.log("EY_INIT_V2", Date.now(), this.options),
         this.els = this.links.map((e, t) => new kF(e, this, t)),
         await Promise.all(this.els.map(e => e.ready)),
-        this.mesh.add(...this.els.map(e => e.mesh).filter(e => e && e.isObject3D)),
+        this.meshEls = this.els.map(e => e.mesh).filter(e => e && e.isObject3D),
+        this.meshEls.length && this.mesh.add(...this.meshEls),
         this.resize(),
         this.interaction = new Er({
             meshes: this.els.map(e => e.interactionMesh),
