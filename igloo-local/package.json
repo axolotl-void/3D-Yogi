@@ -4,12 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "assemble": "node scripts/assemble-app3d.mjs",
     "dev": "vite",
-    "predev": "npm run assemble",
-    "build": "node scripts/assemble-app3d.mjs && vite build",
-    "prebuild": "npm run assemble",
-    "verify:app3d": "node scripts/assemble-app3d.mjs --verify",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
