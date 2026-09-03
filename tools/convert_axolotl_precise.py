@@ -65,10 +65,9 @@ sx, sy, sz = mat.shape
 if sx >= RES or sy >= RES or sz >= RES:
     raise SystemExit(f'Mesh terlalu besar: {mat.shape} >= {RES} — kecilkan skala.')
 
-# --- [USER] Penebalan voxel (dilation 2-3 voxel) agar medan SDF padat ---
-DILATE_ITERS = 2
-mat = ndi.binary_dilation(mat, iterations=DILATE_ITERS)
-print(f"→ Dilation {DILATE_ITERS} voxel; ukuran bbox {mat.shape}")
+# --- TANPA dilation: logo axolotl berbentuk ribbon/pita tipis. Dilation menebalkan
+# kontur & menutup rongga tengah + celah insang -> partikel menempel di blob tebal,
+# bukan di kontur tajam. Volume referensi (axolotl_64.ktx2) juga tanpa dilation. ---
 
 # --- Taruh di grid, pivot presisi di tengah [32,32,32] ---
 # Center bbox isi ke 31.5 (tengah grid 0..63) dengan clamping agar tidak menabrak dinding.

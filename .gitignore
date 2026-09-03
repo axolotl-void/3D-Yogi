@@ -41,6 +41,7 @@ igloo-local/dist/
 
 # Backup folder (mirror dari old state)
 webGL-backup-*/
+.hermes-backup-*/
 
 # Source archive (lokal only)
 hasil-inspekc/

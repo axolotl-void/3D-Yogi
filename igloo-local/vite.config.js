@@ -49,24 +49,12 @@ export default defineConfig({
   server: {
     port: 3000,
     host: '0.0.0.0',
-    proxy: {
-      '/assets': {
-        target: 'https://www.igloo.inc',
-        changeOrigin: true,
-        secure: true
-      }
-    }
+    // Semua aset sekarang lokal di public/assets — proxy ke igloo.inc dihapus (offline total)
   },
   preview: {
     port: 3000,
     host: '0.0.0.0',
-    proxy: {
-      '/assets': {
-        target: 'https://www.igloo.inc',
-        changeOrigin: true,
-        secure: true
-      }
-    }
+    // Semua aset sekarang lokal di public/assets — proxy ke igloo.inc dihapus (offline total)
   },
   build: {
     target: 'es2019',
