@@ -48,12 +48,12 @@ export default defineConfig({
   plugins: [localFirstProxy()],
   server: {
     port: 3000,
-    host: '0.0.0.0',
+    host: '::', // dual-stack: IPv6 (::1) + IPv4 (127.0.0.1) — biar Safari bisa via localhost
     // Semua aset sekarang lokal di public/assets — proxy ke igloo.inc dihapus (offline total)
   },
   preview: {
     port: 3000,
-    host: '0.0.0.0',
+    host: '::',
     // Semua aset sekarang lokal di public/assets — proxy ke igloo.inc dihapus (offline total)
   },
   build: {
