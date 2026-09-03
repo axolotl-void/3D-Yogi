@@ -65,9 +65,20 @@ sx, sy, sz = mat.shape
 if sx >= RES or sy >= RES or sz >= RES:
     raise SystemExit(f'Mesh terlalu besar: {mat.shape} >= {RES} — kecilkan skala.')
 
-# --- TANPA dilation: logo axolotl berbentuk ribbon/pita tipis. Dilation menebalkan
-# kontur & menutup rongga tengah + celah insang -> partikel menempel di blob tebal,
-# bukan di kontur tajam. Volume referensi (axolotl_64.ktx2) juga tanpa dilation. ---
+# --- DILATION AKTIF: logo axolotl berbentuk ribbon/pita tipis (3.3% okupansi, Z cuma 9 voxel).
+# Partikel butuh "daging" buat nempel — volume tipis bikin cuma 20% partikel yang settle di logo.
+# Dilation menebalkan bentuk (terutama sumbu Z/depth) tanpa ngerusak siluet depan.
+# (Catatan: ktx2 referensi 96% solid tapi ada artefak dinding tepi, jadi regenerate lebih bersih.)
+DILATE = 6
+if DILATE > 0:
+    import scipy.ndimage as ndi2
+    # Dilation isotropik 2x tambahan di bawah (setelah Z-dilate) biar permukaan solid
+    DILATE_ISO = 2
+
+# --- EKSTRUSI SILUET (mode M/X): volume M/X asli = huruf extruded (siluet sama di tiap Z).
+# Axolotl (logo datar) di-extrude sepanjang Z biar punya "daging" kayak X/M — partikel kejebak
+# dari semua arah tanpa perlu kode shader khusus. EXTRUDE_Z = tebal Z dalam voxel (0 = matikan).
+EXTRUDE_Z = 24
 
 # --- Taruh di grid, pivot presisi di tengah [32,32,32] ---
 # Center bbox isi ke 31.5 (tengah grid 0..63) dengan clamping agar tidak menabrak dinding.
@@ -104,6 +115,27 @@ grid = _center_axis(grid, 0)
 grid = _center_axis(grid, 1)
 grid = _center_axis(grid, 2)
 
+# Ekstrusi siluet sepanjang Z (mode X/M: huruf extruded, siluet sama di tiap kedalaman).
+# Proyeksikan isi saat ini ke bidang XY (max sepanjang Z) = siluet depan, lalu isi ulang
+# slab Z setebal EXTRUDE_Z di tengah. Ini bikin "balok" kayak volume X/M asli.
+if EXTRUDE_Z > 0:
+    siluet = grid.any(axis=2)  # (x,y) — bentuk depan
+    grid[:] = False
+    z0 = (RES - EXTRUDE_Z) // 2
+    grid[:, :, z0:z0 + EXTRUDE_Z] = siluet[:, :, None]
+    print(f"→ Ekstrusi siluet Z: tebal {EXTRUDE_Z} voxel (z{z0}..{z0+EXTRUDE_Z})")
+
+# Terapkan dilation (tebalkan) setelah centering — biar sumbu Z (kedalaman) nggak tipis kertas
+if DILATE > 0:
+    # Dilation anisotropik: tebalkan SUMBU Z (depth) lebih agresif, X/Y ringan (jaga detail insang)
+    dil_struct = np.zeros((3, 3, 3), dtype=bool)
+    dil_struct[1, 1, :] = True  # hanya sumbu Z (axis 2 di grid x,y,z)
+    grid = ndi2.binary_dilation(grid, structure=dil_struct, iterations=DILATE)
+    # tambahan dilation isotropik (DILATE_ISO)x biar permukaan solid, bukan kertas
+    grid = ndi2.binary_dilation(grid, iterations=DILATE_ISO)
+    # crop isi yang mungkin kebablasan ke tepi setelah dilation
+    # (tidak perlu — centering sudah, dilation maks 2 dari isi yang ada margin)
+
 occ = grid.sum()
 print(f"📊 Stats: Grid={RES}x{RES}x{RES}, Occupied Voxels={occ} ({occ/(RES**3)*100:.2f}%)")
 
@@ -123,8 +155,14 @@ gx, gy, gz = np.gradient(sdf)
 norm = np.sqrt(gx * gx + gy * gy + gz * gz) + 1e-8
 nx, ny, nz = gx / norm, gy / norm, gz / norm
 
-# Alpha: isosurface (0) -> 128, dalam > 128
-alpha = np.clip((sdf / 0.4) * 127.5 + 128.0, 0, 255).astype(np.uint8)
+# Alpha: isosurface (0) -> 128, dalam > 128.
+# SDF_DIV: jarak (grid unit) buat mencapai alpha 255. 0.4 = lembut (perlu 25 voxel),
+# 0.12 = pekat (interior ~8 voxel langsung 255) — biar partikel yang masuk kejebak kuat.
+SDF_DIV = 0.12
+alpha = np.clip((sdf / SDF_DIV) * 127.5 + 128.0, 0, 255).astype(np.uint8)
+# DEBUG: statistik sdf & alpha sebelum ditulis
+print(f"→ DEBUG sdf: min={sdf.min():.3f} max={sdf.max():.3f} mean_in={sdf[sdf>0].mean() if (sdf>0).any() else 0:.3f}")
+print(f"→ DEBUG alpha: max={alpha.max()} >200={(alpha>200).sum()} >170={(alpha>170).sum()}")
 
 # --- Pack RGBA (x,y,z,c) lalu transpose ke memori WebGL Data3DTexture (z,y,x,c) ---
 rgba = np.zeros((RES, RES, RES, 4), dtype=np.uint8)

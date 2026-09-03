@@ -40025,7 +40025,7 @@ Mari bikin sesuatu bareng.`,
         title: "Axolotl 3D",
         url: "https://github.com/axolotl-void",
         vdb: "axolotl_64.raw",
-        scale: 0.65
+        scale: 1.0
     }],
     volume: 1,
     muted: !0
@@ -50053,6 +50053,7 @@ class yF {
             }),
             this.parent.mesh.computationMaterial.uniforms.tVolume.value = this.parent.vdbs[this.parent.currentLink],
             this.parent.mesh.computationMaterial.uniforms.uVolumeScale.value = this.parent.vdbScales[this.parent.currentLink],
+            this.parent.mesh.computationMaterial.uniforms.uLinkIndex.value = this.parent.currentLink,
             this.parent.mesh.computationMaterial.uniforms.uRotation.value = Math.PI * 1.5,
             (s = this.arrows) == null || s.show(e === 1 ? "right" : "left", .75),
             (n = this.bottom) == null || n.show(1, !1, !1),
@@ -50380,6 +50381,9 @@ class wF {
                     uVolumeScale: {
                         value: this.vdbScales[0]
                     },
+                    uLinkIndex: {
+                        value: 0
+                    },
                     uLightPos: {
                         value: o
                     },
@@ -50432,6 +50436,7 @@ class wF {
                                     #endif
                                     uniform sampler3D tVolume;
                                     uniform float uVolumeScale;
+                                    uniform float uLinkIndex;
 
                                     ${ae}
                                     ${pF}
@@ -50470,23 +50475,39 @@ class wF {
                                         float invFluidStrength = 1.0 - length(vel) * 0.65 * uInteractForce;
 
                                         float additionalNoise = max(uAdditionalNoise, uShowNoise);
+                                        // MODE AXOLOTL (uLinkIndex==3): deteksi sejak awal biar noise/tarik-orig/gaya bisa disesuaikan
+                                        float axoMode = step(2.5, uLinkIndex);
+                                        // axoActive: aktif penuh saat noise transisi reda, TAPI ber-tahap (bertambah pelan seiring noise []).
+                                        // Fase pecah (noise ~1): axoActive ~0 → perilaku = logo lain. Noise turun → tarikan naik gradual
+                                        // → transisi masuk axolotl mulus & setara M/X (bukan on/off mendadak).
+                                        float axoActive = axoMode * (1.0 - smoothstep(0.0, 0.9, additionalNoise));
+                                        // Interaksi mouse/touch: kalau partikel lagi diaduk (tVel gede), redam tarikan axolotl
+                                        // biar partikel bisa "terbang" & balik kayak M/X — nggak kaku nempel.
+                                        float axoInteract = clamp(length(vel) * 8.0, 0.0, 1.0);
+                                        axoActive *= 1.0 - axoInteract * 0.9;
 
                                         // add curl noise
-                                        float force1 = 0.0002 * (0.7 + 0.3 * vRand.z) + 0.0004 * additionalNoise;
+                                        float force1 = (0.0002 * (0.7 + 0.3 * vRand.z) + 0.0004 * additionalNoise) * (1.0 - axoActive * 0.8);
                                         currentVel.xyz += BitangentNoise4D(vec4((currentPos.xyz) * 7.0, time * (1.0 + 0.7 * vRand.y))) * force1 * dtRatio;
 
                                         // towards origanl position
                                         vec4 origPos = texelFetch(tOrig, uv, 0);
                                         vec3 toOrig = origPos.xyz - currentPos.xyz;
-                                        currentVel.xyz += (origPos.xyz - currentPos.xyz) * 0.001 * dtRatio * invFluidStrength;
+                                        // MODE AXOLOTL: matikan tarikan ke posisi asal SETELAH settle (biar partikel cuma ditarik ke volume logo)
+                                        currentVel.xyz += (origPos.xyz - currentPos.xyz) * 0.001 * (1.0 - axoActive) * dtRatio * invFluidStrength;
 
                                         // towards the surface
                                         float force2 = 0.0015 * (0.7 + 0.3 * vRand.w);
-                                        float signForce = mix(0.0, -0.3, sign(dist) + 1.0);
-                                        currentVel.xyz += grad * force2 * signForce * dtRatio * invFluidStrength;
+                                        // MODE AXOLOTL (uLinkIndex==3): partikel luar ditarik masuk & dalam didorong keluar -> semua settle di shell
+                                        // MODE LAIN (M/X/pinguin, idx 0-2): pertahankan perilaku asli igloo (hanya tarik dari dalam) biar lubang/negative-space nggak rusak
+                                        // AXOLOTL: tarik partikel luar dengan kekuatan proporsional jarak (yang jauh ditarik lebih kuat) — SETELAH settle
+                                        float force2axo = mix(0.0, 0.02, axoActive);
+                                        float pullBoost = mix(1.0, 1.0 + max(0.0, -dist) * 3.0, axoActive);
+                                        float signForce = mix(mix(0.0, -0.3, sign(dist) + 1.0), -clamp(dist * 0.5, -1.0, 1.0), axoActive);
+                                        currentVel.xyz += grad * (force2 + force2axo) * signForce * pullBoost * dtRatio * invFluidStrength;
 
-                                        // friction
-                                        currentVel.xyz *= frictionFPS(0.9, dtRatio);
+                                        // friction (axolotl lebih tinggi SETELAH settle biar partikel yang udah nempel nggak gampang lepas)
+                                        currentVel.xyz *= frictionFPS(mix(0.9, 0.95, axoActive), dtRatio);
 
                                         // position
 
