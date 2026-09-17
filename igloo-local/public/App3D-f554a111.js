@@ -50054,6 +50054,15 @@ class yF {
             this.parent.mesh.computationMaterial.uniforms.tVolume.value = this.parent.vdbs[this.parent.currentLink],
             this.parent.mesh.computationMaterial.uniforms.uVolumeScale.value = this.parent.vdbScales[this.parent.currentLink],
             this.parent.mesh.computationMaterial.uniforms.uLinkIndex.value = this.parent.currentLink,
+            // uAxoRamp: reset 0 tiap pindah logo, lalu naik halus — tarikan axolotl "mengendap", bukan snap.
+            // (untuk logo lain axoMode=0 jadi ramp ini nggak ngaruh sama sekali)
+            this.parent.mesh.computationMaterial.uniforms.uAxoRamp.value = 0,
+            re.to(this.parent.mesh.computationMaterial.uniforms.uAxoRamp, {
+                value: 1,
+                duration: .5,
+                ease: "power2.inOut",
+                overwrite: !0
+            }),
             this.parent.mesh.computationMaterial.uniforms.uRotation.value = Math.PI * 1.5,
             (s = this.arrows) == null || s.show(e === 1 ? "right" : "left", .75),
             (n = this.bottom) == null || n.show(1, !1, !1),
@@ -50384,6 +50393,9 @@ class wF {
                     uLinkIndex: {
                         value: 0
                     },
+                    uAxoRamp: {
+                        value: 1
+                    },
                     uLightPos: {
                         value: o
                     },
@@ -50436,7 +50448,8 @@ class wF {
                                     #endif
                                     uniform sampler3D tVolume;
                                     uniform float uVolumeScale;
-                                    uniform float uLinkIndex;
+                                    uniform float uLinkIndex; // 0..3 = index VDB aktif (0=pinguin,1=X,2=medium,3=axolotl)
+                                    uniform float uAxoRamp;   // ramp 0..1: fade tarikan khusus axolotl (node GSAP) — biar menyatu gradual, bukan snap
 
                                     ${ae}
                                     ${pF}
@@ -50477,37 +50490,44 @@ class wF {
                                         float additionalNoise = max(uAdditionalNoise, uShowNoise);
                                         // MODE AXOLOTL (uLinkIndex==3): deteksi sejak awal biar noise/tarik-orig/gaya bisa disesuaikan
                                         float axoMode = step(2.5, uLinkIndex);
-                                        // axoActive: aktif penuh saat noise transisi reda, TAPI ber-tahap (bertambah pelan seiring noise []).
-                                        // Fase pecah (noise ~1): axoActive ~0 → perilaku = logo lain. Noise turun → tarikan naik gradual
-                                        // → transisi masuk axolotl mulus & setara M/X (bukan on/off mendadak).
-                                        float axoActive = axoMode * (1.0 - smoothstep(0.0, 0.9, additionalNoise));
+                                        // Gate noise: axolotl ikut fase pecah bareng M/X saat masuk, baru tarikan ekstra nyala di ujung transisi.
+                                        float axoNoiseGate = 1.0 - smoothstep(0.0, 0.9, additionalNoise);
+
                                         // Interaksi mouse/touch: kalau partikel lagi diaduk (tVel gede), redam tarikan axolotl
                                         // biar partikel bisa "terbang" & balik kayak M/X — nggak kaku nempel.
                                         float axoInteract = clamp(length(vel) * 8.0, 0.0, 1.0);
-                                        axoActive *= 1.0 - axoInteract * 0.9;
+
+                                        // uAxoRamp: node GSAP 0->1 yang DIRESET tiap ganti logo; smoothing-nya bikin
+                                        // tarikan nggak nyala mendadak, dan bikin axolotl MENGENDAP (bukan kesedot) kayak logo lain.
+                                        float axoActive = axoMode * axoNoiseGate * smoothstep(0.0, 1.0, uAxoRamp) * (1.0 - axoInteract * 0.9);
 
                                         // add curl noise
-                                        float force1 = (0.0002 * (0.7 + 0.3 * vRand.z) + 0.0004 * additionalNoise) * (1.0 - axoActive * 0.8);
+                                        float force1 = (0.0002 * (0.7 + 0.3 * vRand.z) + 0.0004 * additionalNoise) * (1.0 - axoActive * 0.5);
                                         currentVel.xyz += BitangentNoise4D(vec4((currentPos.xyz) * 7.0, time * (1.0 + 0.7 * vRand.y))) * force1 * dtRatio;
 
                                         // towards origanl position
                                         vec4 origPos = texelFetch(tOrig, uv, 0);
                                         vec3 toOrig = origPos.xyz - currentPos.xyz;
-                                        // MODE AXOLOTL: matikan tarikan ke posisi asal SETELAH settle (biar partikel cuma ditarik ke volume logo)
-                                        currentVel.xyz += (origPos.xyz - currentPos.xyz) * 0.001 * (1.0 - axoActive) * dtRatio * invFluidStrength;
+                                        // MODE AXOLOTL: pegas ke posisi asal diredam pas tarikan penuh (biar bentuk rapat),
+                                        // tapi TIDAK dimatikan total — biar partikel bisa dibalikin/diaduk kayak M/X.
+                                        currentVel.xyz += (origPos.xyz - currentPos.xyz) * 0.001 * (1.0 - axoActive * 0.8) * dtRatio * invFluidStrength;
 
                                         // towards the surface
                                         float force2 = 0.0015 * (0.7 + 0.3 * vRand.w);
-                                        // MODE AXOLOTL (uLinkIndex==3): partikel luar ditarik masuk & dalam didorong keluar -> semua settle di shell
-                                        // MODE LAIN (M/X/pinguin, idx 0-2): pertahankan perilaku asli igloo (hanya tarik dari dalam) biar lubang/negative-space nggak rusak
-                                        // AXOLOTL: tarik partikel luar dengan kekuatan proporsional jarak (yang jauh ditarik lebih kuat) — SETELAH settle
-                                        float force2axo = mix(0.0, 0.02, axoActive);
-                                        float pullBoost = mix(1.0, 1.0 + max(0.0, -dist) * 3.0, axoActive);
+                                        // MODE AXOLOTL (uLinkIndex==3): partikel luar ditarik masuk & dalam didorong keluar -> settle di shell.
+                                        // MODE LAIN (M/X/pinguin, idx 0-2): perilaku asli igloo (hanya tarik dari dalam) biar lubang/negative-space nggak rusak.
+                                        // Kekuatan tarik axolotl didekatkan ke M/X (0.004 vs 0.0015) + pullBoost dibatasi cap 1.5 & diredam saat interaksi
+                                        // => "mengendap" gradual, bukan kesedot magnet.
+                                        // CATATAN: damping interaksi HARUS di dalam cabang axolotl-nya saja —
+                                        // kalau dikalikan di luar mix(), M/X/pinguin ikut teredam dan feel aslinya berubah.
+                                        float axoInteractDamp = 1.0 - axoInteract * 0.5;
+                                        float force2axo = mix(0.0, 0.004 * axoInteractDamp, axoActive);
+                                        float pullBoost = mix(1.0, min(1.0 + max(0.0, -dist) * 3.0, 1.5) * axoInteractDamp, axoActive);
                                         float signForce = mix(mix(0.0, -0.3, sign(dist) + 1.0), -clamp(dist * 0.5, -1.0, 1.0), axoActive);
                                         currentVel.xyz += grad * (force2 + force2axo) * signForce * pullBoost * dtRatio * invFluidStrength;
 
-                                        // friction (axolotl lebih tinggi SETELAH settle biar partikel yang udah nempel nggak gampang lepas)
-                                        currentVel.xyz *= frictionFPS(mix(0.9, 0.95, axoActive), dtRatio);
+                                        // friction (axolotl sedikit lebih tinggi SETELAH settle biar partikel yang nempel nggak gampang lepas)
+                                        currentVel.xyz *= frictionFPS(mix(0.9, 0.945, axoActive), dtRatio);
 
                                         // position
 
@@ -52006,6 +52026,19 @@ class UF extends Jo {
         }, 0),
         this.timeline.set(this.containerparticles.mesh, {
             visible: !0
+        }, 1.5),
+        this.timeline.set(this.containerparticles.mesh.material.uniforms.uAlpha, {
+            value: 0
+        }, 0),
+        // Entry: volume partikel baru kelihatan di t≈1.5s; reset ramp axolotl di titik itu biar transisi
+        // menyatunya identik dengan pindah logo (bukan ramp yang keburu penuh waktu partikel disembunyikan).
+        this.timeline.set(this.containerparticles.mesh.computationMaterial.uniforms.uAxoRamp, {
+            value: 0
+        }, 1.5),
+        this.timeline.to(this.containerparticles.mesh.computationMaterial.uniforms.uAxoRamp, {
+            value: 1,
+            duration: .5,
+            ease: "power2.inOut"
         }, 1.5),
         this.timeline.fromTo(this.containerparticles.mesh.material.uniforms.uAlpha, {
             value: 0
