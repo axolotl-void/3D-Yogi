@@ -32918,7 +32918,9 @@ class jo {
     _onMessage(e, t)
     {
         const s = this.workersResolve[e];
-        if (s && s(t), this.queue.length) {
+        if (s && s(t),
+        typeof window < "u" && window.__webglLoader && (window.__webglLoader.done += 1, window.__webglLoader.phase === "ready" && (window.__webglLoader.done = window.__webglLoader.total)),
+        this.queue.length) {
             const {resolve: n, msg: r, transfer: a} = this.queue.shift();
             this.workersResolve[e] = n,
             this.workers[e].postMessage(r, a)
@@ -32935,7 +32937,8 @@ class jo {
     }
     postMessage(e, t)
     {
-        return new Promise(s => {
+        return typeof window < "u" && window.__webglLoader && window.__webglLoader.phase === "ready" && (window.__webglLoader.total += 1),
+        new Promise(s => {
             const n = this._getIdleWorker();
             n !== -1 ? (this._initWorker(n), this.workerStatus |= 1 << n, this.workersResolve[n] = s, this.workers[n].postMessage(e, t)) : this.queue.push({
                 resolve: s,
@@ -55670,6 +55673,10 @@ function sN(i, e, t) {
             t(2, c = !0);
             return
         }
+        typeof window < "u" && (window.__webglLoader = {done:0, total:6, phase:"boot", t0:performance.now()}),
+        typeof Q < "u" && Q.on && ["webgl_intro_progress","webgl_loaded_home","webgl_loaded_cubes","webgl_router_start","webgl_scene_changed"].forEach(ev => Q.on(ev, () => {
+            var _w; typeof window < "u" && (_w = window.__webglLoader) !== null && _w !== void 0 && (_w.done = Math.min(_w.done + 1, _w.total));
+        })),
         t(1, l = !0),
         await Promise.all([LE(), h()]),
         Ei.create("inOut5", "M0,0 C0.171,0 0.77,-0.013 0.842,0.272 0.972,0.794 0.972,0.85 1,1"),
@@ -55702,7 +55709,8 @@ function sN(i, e, t) {
             const f = new jF;
             await f.ready,
             f.start(),
-            s(() => !0)
+            s(() => !0),
+            typeof window < "u" && window.__webglLoader && (window.__webglLoader.phase = "ready", window.__webglLoader.done = window.__webglLoader.total)
         }
     });
     function d(u) {

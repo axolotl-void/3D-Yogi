@@ -473,13 +473,16 @@ function Q(t) {
         c,
         f,
         u,
-        s;
+        s,
+        p,
+        w;
     return {
         c() {
             n = L("div"),
             e = L("div"),
             r = vt(),
             i = L("style"),
+            p = L("div"),
             i.textContent = `/* js */
                         div#loader {
                             display: flex;
@@ -512,6 +515,20 @@ function Q(t) {
                             animation-duration:5s;
                             animation-iteration-count: infinite;
                             text-shadow: 0px 0px 5px rgba(255,255,255,0.4);
+                        }
+
+                        .percent {
+                            margin-top: 14px;
+                            color: #ffffff;
+                            font-size: 12px;
+                            font-family: IBMPlexMono-Medium, monospace;
+                            font-weight: 400;
+                            letter-spacing: 0.08em;
+                            user-select: none;
+                            font-variant-numeric: tabular-nums;
+                            text-shadow: 0px 0px 5px rgba(255,255,255,0.4);
+                            position: relative;
+                            z-index: 2;
                         }
 
                         @keyframes head {
@@ -625,9 +642,21 @@ function Q(t) {
             C(n, e),
             C(n, r),
             C(n, i),
+            U(p, "class", "percent"),
+            p.textContent = "0%",
+            C(n, p),
             t[6](n),
             f = !0,
-            u || (s = Et(n, "outroend", t[7]), u = !0)
+            u || (s = Et(n, "outroend", t[7]), u = !0),
+            w = setInterval(() => {
+                var _x;
+                const s2 = (typeof window < "undefined" && (_x = window.__webglLoader) !== null && _x !== void 0) ? _x : null;
+                if (!s2) return;
+                const done = s2.done | 0, total = Math.max(s2.total | 0, 1);
+                let pct = Math.min(99, Math.floor(done / total * 100));
+                if (s2.phase === "boot") pct = Math.max(pct, Math.min(pct, 8));
+                p.textContent = pct + "%";
+            }, 120)
         },
         p(l, a) {
             t = l
@@ -652,6 +681,7 @@ function Q(t) {
             t[6](null),
             l && c && c.end(),
             u = !1,
+            w && (clearInterval(w), w = null),
             s()
         }
     }
