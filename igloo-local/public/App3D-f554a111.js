@@ -39264,7 +39264,7 @@ function i3(i, e) {
                 value: le.load(`../fonts/${i}-datatexture.ktx2`, "data")
             },
             uColor: {
-                value: new Z("#ffffff")
+                value: new Z("#e8f1f8")
             },
             uAlpha: {
                 value: 1
@@ -39792,11 +39792,11 @@ const Be = {
     breakpointW: 1600,
     breakpointH: 800,
     breakPointMobile: 640,
-    colorLogo: "#ffffff",
-    colorTitle: "#3C3C54",
-    colorText: "#ffffff",
-    colorProjectTitle: "#67707E",
-    colorProjectText: "#A1AAB7",
+    colorLogo: "#E8F1F8",
+    colorTitle: "#5B9BD5",
+    colorText: "#FFFFFF",
+    colorProjectTitle: "#7A8FA8",
+    colorProjectText: "#A8D0E6",
     manifesto: {
         title: "////// Hello",
         text: "Hi, I'm Yogi. Welcome to my corner of the internet."
@@ -40402,7 +40402,7 @@ class p3 extends fe {
                     value: null
                 },
                 uColor: {
-                    value: new Z("#8b909d")
+                    value: new Z("#7A8FA8")
                 },
                 uIntro: {
                     value: 0
@@ -40585,13 +40585,13 @@ class g3 {
                 uniformsGroups: [he.UBO],
                 uniforms: {
                     uColor1: {
-                        value: new Z("#d1d6e3")
+                        value: new Z("#1E3A5F")
                     },
                     uColor2: {
-                        value: new Z("#afb6c7")
+                        value: new Z("#5B9BD5")
                     },
                     uIntroColor: {
-                        value: new Z("#b3bac9")
+                        value: new Z("#7A8FA8")
                     },
                     uProgress: {
                         value: 0
@@ -41023,7 +41023,7 @@ class w3 {
     {
         const e = await zt.load("igloo/igloo_cage.drc"),
             t = new _3({
-                color: "#a7b2d6",
+                color: "#5B9BD5",
                 opacity: .3,
                 transparent: !0
             });
@@ -41125,7 +41125,7 @@ class C3 {
     {
         const e = await zt.load("igloo/igloo_outline.drc"),
             t = new E3({
-                color: "#a7b2d6",
+                color: "#5B9BD5",
                 opacity: .3,
                 transparent: !0
             });
@@ -41162,10 +41162,10 @@ class S3 {
                 uniformsGroups: [he.UBO],
                 uniforms: {
                     uColor1: {
-                        value: new Z("#d1d6e3")
+                        value: new Z("#5B9BD5")
                     },
                     uColor2: {
-                        value: new Z("#afb6c7")
+                        value: new Z("#5B9BD5")
                     },
                     tMap: {
                         value: le.load("igloo/mountain_color.ktx2", "srgb")
@@ -41952,16 +41952,16 @@ class B3 {
                         value: t
                     },
                     uColor1: {
-                        value: new Z("#cda05e")
+                        value: new Z("#5B9BD5")
                     },
                     uColor2: {
-                        value: new Z("#ab8349")
+                        value: new Z("#3D5F8A")
                     },
                     uMousePos: {
                         value: this.mousePosition
                     },
                     uOutlineColor: {
-                        value: new Z("#904619")
+                        value: new Z("#1E3A5F")
                     },
                     uAlpha: {
                         value: 0
@@ -42210,7 +42210,7 @@ class P3 {
             uniformsGroups: [he.UBO],
             uniforms: {
                 uColor: {
-                    value: new Z("#ffffff")
+                    value: new Z("#e8f1f8")
                 },
                 uSize: {
                     value: 200
@@ -42429,7 +42429,7 @@ class D3 {
                     value: le.load("numbers-datatexture.ktx2", "data")
                 },
                 uColor: {
-                    value: new Z("#ffffff")
+                    value: new Z("#e8f1f8")
                 },
                 uSize: {
                     value: 1
@@ -42560,7 +42560,7 @@ class R3 {
         const e = new ot;
         e.setAttribute("position", new nt(new Float32Array(this.maxPlexusPoints * this.maxPlexusConnections * 2 * 3), 3));
         const t = new ga({
-            color: "#ffffff",
+            color: "#e8f1f8",
             opacity: .25,
             transparent: !0
         });
@@ -43989,10 +43989,10 @@ class k3 {
                     value: 0
                 },
                 uColor1: {
-                    value: new Z("#c9d0df")
+                    value: new Z("#5B9BD5")
                 },
                 uColor2: {
-                    value: new Z("#545b6b")
+                    value: new Z("#7A8FA8")
                 },
                 tPerlin: {
                     value: le.load("perlin-datatexture.ktx2", "colordata-repeat")
@@ -44116,7 +44116,7 @@ class z3 {
                         value: 0
                     },
                     uColor1: {
-                        value: new Z("#c9d0df")
+                        value: new Z("#5B9BD5")
                     },
                     tMap: {
                         value: le.load("cubes/blurrytext_atlas.ktx2", "srgb-repeat")
@@ -46499,7 +46499,7 @@ class WL extends Ys {
                 value: null
             },
             uColorFrost: {
-                value: new Z("#83a1c5")
+                value: new Z("#A8D0E6")
             },
             uChromaticAberration: {
                 value: .1
@@ -46514,7 +46514,7 @@ class WL extends Ys {
                 value: 0
             },
             uAttenuationColor: {
-                value: new Z("#ffffff")
+                value: new Z("#e8f1f8")
             },
             uTransmissionSamplerSize: {
                 value: new H
@@ -46869,7 +46869,7 @@ class YL {
     {
         const e = new ot,
             t = new ga({
-                color: "#ffffff",
+                color: "#e8f1f8",
                 opacity: 1,
                 transparent: !0
             });
@@ -46895,7 +46895,7 @@ class YL {
                     value: le.load("../fonts/IBMPlexMono-Medium-datatexture.ktx2", "data")
                 },
                 uColor: {
-                    value: new Z("#ffffff")
+                    value: new Z("#e8f1f8")
                 },
                 uShow1: {
                     value: 0
@@ -47030,7 +47030,7 @@ class qL {
     {
         const e = new ot,
             t = new ga({
-                color: "#ffffff",
+                color: "#e8f1f8",
                 opacity: 1,
                 transparent: !0
             });
@@ -47058,7 +47058,7 @@ class qL {
                     value: le.load("../fonts/IBMPlexMono-Medium-datatexture.ktx2", "data")
                 },
                 uColor: {
-                    value: new Z("#ffffff")
+                    value: new Z("#e8f1f8")
                 },
                 uShow1: {
                     value: 0
@@ -47258,7 +47258,7 @@ class XL {
                     value: le.load("../fonts/IBMPlexMono-Medium-datatexture.ktx2", "data")
                 },
                 uColor: {
-                    value: new Z("#ffffff")
+                    value: new Z("#e8f1f8")
                 },
                 uShow1: {
                     value: 0
@@ -48141,7 +48141,7 @@ class nF extends Gi {
                     value: le.load("wind_noise.ktx2", "srgb-repeat")
                 },
                 uColor1: {
-                    value: new Z("#886a3d")
+                    value: new Z("#4A6FA5")
                 },
                 uProgress: {
                     value: 100
@@ -48716,10 +48716,10 @@ class lF extends fe {
                     value: 1
                 },
                 uColor1: {
-                    value: new Z("#6a6f7d")
+                    value: new Z("#7a8fa8")
                 },
                 uColor2: {
-                    value: new Z("#e1e6f1")
+                    value: new Z("#a8d0e6")
                 }
             },
             vertexShader: `
@@ -48937,10 +48937,10 @@ class hF {
                         value: q.devScene ? 1 : 0
                     },
                     uColor1: {
-                        value: new Z("#6a6f7d")
+                        value: new Z("#7a8fa8")
                     },
                     uColor2: {
-                        value: new Z("#e1e6f1")
+                        value: new Z("#a8d0e6")
                     },
                     uRotationTime: {
                         value: 0
@@ -49217,10 +49217,10 @@ class dF {
                         value: 1
                     },
                     uColor1: {
-                        value: new Z("#6a6f7d")
+                        value: new Z("#7a8fa8")
                     },
                     uColor2: {
-                        value: new Z("#e1e6f1")
+                        value: new Z("#a8d0e6")
                     },
                     tPerlin: {
                         value: le.load("perlin-datatexture.ktx2", "colordata-repeat")
@@ -49516,7 +49516,7 @@ class gF {
         const r = new fe({
             uniforms: {
                 uColor: {
-                    value: new Z("#ffffff")
+                    value: new Z("#e8f1f8")
                 },
                 uWidth: {
                     value: .3
@@ -49843,7 +49843,7 @@ class xF {
                     value: le.load("scroll-datatexture.ktx2", "data-repeat")
                 },
                 uColor: {
-                    value: new Z("#ffffff")
+                    value: new Z("#e8f1f8")
                 },
                 uShow: {
                     value: 1
@@ -51143,10 +51143,10 @@ class bF {
                         value: 1
                     },
                     uColor1: {
-                        value: new Z("#6a6f7d")
+                        value: new Z("#7a8fa8")
                     },
                     uColor2: {
-                        value: new Z("#e1e6f1")
+                        value: new Z("#a8d0e6")
                     }
                 },
                 vertexShader: `
@@ -52943,7 +52943,7 @@ class OF {
                     value: new Z(Be.colorLogo)
                 },
                 uColor2: {
-                    value: new Z("#ffffff")
+                    value: new Z("#e8f1f8")
                 },
                 uShow: {
                     value: 1
@@ -53732,7 +53732,7 @@ class zF {
         const e = Be.cubes[this.index].interior,
             t = {
                 font: "IBMPlexMono-Medium",
-                color: "#ffffff",
+                color: "#e8f1f8",
                 width: 4,
                 align: "left",
                 lineHeight: 1,
@@ -54268,7 +54268,7 @@ class HF {
                     value: new Z("#09121f")
                 },
                 uColor2: {
-                    value: new Z("#6b7685")
+                    value: new Z("#7A8FA8")
                 },
                 tNoise: {
                     value: le.load("wind_noise.ktx2", "colordata-repeat")
@@ -54562,7 +54562,7 @@ class YF {
                     value: le.load("perlin-datatexture.png", "srgb-repeat")
                 },
                 uColor: {
-                    value: new Z("#d1e3ff")
+                    value: new Z("#A8D0E6")
                 }
             },
             vertexShader: `
@@ -54639,7 +54639,7 @@ class qF {
                     value: le.load("bokeh.ktx2", "srgb-repeat")
                 },
                 uColor: {
-                    value: new Z("#d1e3ff")
+                    value: new Z("#A8D0E6")
                 }
             },
             vertexShader: `
